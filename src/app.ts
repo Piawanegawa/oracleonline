@@ -10,12 +10,14 @@ import type { RouteContext } from "./controller/routes/routeContext.js";
 import { DiceRoller } from "./model/dice/DiceRoller.js";
 import { LocalPdfScanner } from "./model/pdf/PdfScanner.js";
 import { PluginRegistry } from "./model/plugins/PluginRegistry.js";
+import { BookOfRandomTables1To4Plugin } from "./model/plugins/systems/book-of-random-tables-1-4/BookOfRandomTables1To4Plugin.js";
 import { BookOfRandomTables5Plugin } from "./model/plugins/systems/book-of-random-tables-5/BookOfRandomTables5Plugin.js";
 import { InMemoryFavoriteRepository } from "./model/storage/FavoriteRepository.js";
 import { InMemoryTableRepository } from "./model/tables/TableRepository.js";
 
 export async function createDefaultRouteContext(): Promise<RouteContext> {
   const pluginRegistry = new PluginRegistry();
+  pluginRegistry.register(new BookOfRandomTables1To4Plugin());
   pluginRegistry.register(new BookOfRandomTables5Plugin());
 
   const pdfScanner = new LocalPdfScanner();

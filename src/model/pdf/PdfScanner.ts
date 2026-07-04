@@ -18,8 +18,30 @@ export class LocalPdfScanner implements PdfScanner {
   constructor(private readonly rulebooksDirectory = path.resolve("rulebooks")) {}
 
   async findAvailableSources(): Promise<PdfFile[]> {
-    const bookOfRandomTables5 = await this.findBookOfRandomTables5();
-    return bookOfRandomTables5 === undefined ? [] : [bookOfRandomTables5];
+    const sources = await Promise.all([this.findBookOfRandomTables1To4(), this.findBookOfRandomTables5()]);
+    return sources.filter((source): source is PdfFile => source !== undefined);
+  }
+
+  private async findBookOfRandomTables1To4(): Promise<PdfFile | undefined> {
+    const filenames = [
+      "The_Book_of_Random_Tables_1-4.pdf",
+      "The Book of Random Tables 1-4.pdf",
+      "book-of-random-tables-1-4.pdf",
+      "The Great Book of Random Tables.pdf",
+      "The_Great_Book_of_Random_Tables.pdf"
+    ];
+
+    for (const filename of filenames) {
+      const pdfPath = path.join(this.rulebooksDirectory, filename);
+      if (!existsSync(pdfPath)) continue;
+
+      return {
+        id: "book-of-random-tables-1-4",
+        title: "The Great Book of Random Tables",
+        path: pdfPath,
+        sha256: await sha256File(pdfPath)
+      };
+    }
   }
 
   private async findBookOfRandomTables5(): Promise<PdfFile | undefined> {

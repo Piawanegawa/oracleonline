@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.dev.log
+.server.log
+.server.err.log
+.vite.log
+.vite.err.log
+*.local
+rulebooks

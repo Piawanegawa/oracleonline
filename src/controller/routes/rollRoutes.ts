@@ -1,4 +1,5 @@
 import type { FastifyInstance } from "fastify";
+import { resolveInlineDice } from "../../model/dice/InlineDiceResolver.js";
 import type { RollResultDto } from "../../shared/dto/RollResultDto.js";
 import type { RouteContext } from "./routeContext.js";
 
@@ -15,10 +16,14 @@ export async function rollRoutes(app: FastifyInstance, context: RouteContext): P
       return reply.code(422).send({ message: `Roll ${roll.total} does not match any entry.` });
     }
 
+    const inlineDiceResolution = resolveInlineDice(entry.text, context.diceRoller);
+
     return {
       tableId: table.id,
       roll: roll.total,
-      text: entry.text
+      text: inlineDiceResolution.text,
+      ...(inlineDiceResolution.rolls.length === 0 ? {} : { originalText: entry.text }),
+      inlineRolls: inlineDiceResolution.rolls
     };
   });
 }

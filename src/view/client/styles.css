@@ -204,6 +204,11 @@ td:first-child {
   margin: 0;
 }
 
+.roll-result small {
+  color: #62645f;
+  line-height: 1.4;
+}
+
 .error {
   background: #fff1f0;
   border: 1px solid #e6b8b3;

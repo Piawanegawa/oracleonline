@@ -119,11 +119,14 @@ export function App(): ReactElement {
           ) : rollResult === undefined ? (
             <p className="muted">No roll yet.</p>
           ) : (
-            <div className="roll-result">
-              <span>Rolled {rollResult.roll}</span>
-              <p>{rollResult.text}</p>
-            </div>
-          )}
+                <div className="roll-result">
+                  <span>Rolled {rollResult.roll}</span>
+                  <p>{rollResult.text}</p>
+                  {rollResult.inlineRolls.length > 0 && rollResult.originalText !== undefined && (
+                    <small>From: {rollResult.originalText}</small>
+                  )}
+                </div>
+              )}
         </aside>
       </section>
     </main>

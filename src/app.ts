@@ -8,17 +8,17 @@ import { searchRoutes } from "./controller/routes/searchRoutes.js";
 import { tableRoutes } from "./controller/routes/tableRoutes.js";
 import type { RouteContext } from "./controller/routes/routeContext.js";
 import { DiceRoller } from "./model/dice/DiceRoller.js";
-import { EmptyPdfScanner } from "./model/pdf/PdfScanner.js";
+import { LocalPdfScanner } from "./model/pdf/PdfScanner.js";
 import { PluginRegistry } from "./model/plugins/PluginRegistry.js";
-import { TestBookPlugin } from "./model/plugins/TestBookPlugin.js";
+import { BookOfRandomTables5Plugin } from "./model/plugins/systems/book-of-random-tables-5/BookOfRandomTables5Plugin.js";
 import { InMemoryFavoriteRepository } from "./model/storage/FavoriteRepository.js";
 import { InMemoryTableRepository } from "./model/tables/TableRepository.js";
 
 export async function createDefaultRouteContext(): Promise<RouteContext> {
   const pluginRegistry = new PluginRegistry();
-  pluginRegistry.register(new TestBookPlugin());
+  pluginRegistry.register(new BookOfRandomTables5Plugin());
 
-  const pdfScanner = new EmptyPdfScanner();
+  const pdfScanner = new LocalPdfScanner();
   const tableRepository = new InMemoryTableRepository();
   const favoriteRepository = new InMemoryFavoriteRepository();
   const diceRoller = new DiceRoller();

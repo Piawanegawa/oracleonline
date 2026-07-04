@@ -74,13 +74,13 @@ export function App(): ReactElement {
           <h1>Oracle Online</h1>
           <p>Random tables from rulebook plugins.</p>
         </div>
-        <SearchBox query={query} onSearch={(nextQuery) => void handleSearch(nextQuery)} />
       </header>
 
       {error !== undefined && <p className="error">{error}</p>}
 
       <section className="layout">
         <aside className="sidebar">
+          <SearchBox query={query} onSearch={(nextQuery) => void handleSearch(nextQuery)} />
           <TableList
             tables={tables}
             selectedTableId={selectedTable?.id}
@@ -108,14 +108,23 @@ export function App(): ReactElement {
                 <RollButton onRoll={() => void handleRoll()} />
               </div>
               <TableView table={selectedTable} />
-              {rollResult !== undefined && (
-                <div className="roll-result" aria-live="polite">
-                  <strong>Rolled {rollResult.roll}:</strong> {rollResult.text}
-                </div>
-              )}
             </>
           )}
         </section>
+
+        <aside className="roll-panel" aria-live="polite">
+          <h2>Roll Result</h2>
+          {selectedTable === undefined ? (
+            <p className="muted">No table selected.</p>
+          ) : rollResult === undefined ? (
+            <p className="muted">No roll yet.</p>
+          ) : (
+            <div className="roll-result">
+              <span>Rolled {rollResult.roll}</span>
+              <p>{rollResult.text}</p>
+            </div>
+          )}
+        </aside>
       </section>
     </main>
   );

@@ -6,4 +6,9 @@ dist/
 .vite.log
 .vite.err.log
 *.local
-rulebooks
+rulebooks/*
+!rulebooks/.gitkeep
+data/*
+!data/.gitkeep
+*.sqlite
+*.db

@@ -33,7 +33,7 @@ button.selected {
 }
 
 .app-shell {
-  max-width: 1180px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -41,8 +41,6 @@ button.selected {
 .app-header {
   display: flex;
   align-items: end;
-  justify-content: space-between;
-  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -71,24 +69,40 @@ button.selected {
 
 .layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: minmax(240px, 280px) minmax(520px, 1fr) minmax(240px, 300px);
   gap: 1.25rem;
 }
 
 .sidebar,
-.content {
+.content,
+.roll-panel {
   border: 1px solid #d6d3ca;
   border-radius: 8px;
   background: #ffffff;
   padding: 1rem;
 }
 
-.sidebar {
+.sidebar,
+.roll-panel {
   align-self: start;
 }
 
+.sidebar .search-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.sidebar .search-box input {
+  min-width: 0;
+  width: 100%;
+}
+
+.sidebar .search-box button {
+  width: 100%;
+}
+
 .sidebar h2 {
-  margin: 0.5rem 0;
+  margin: 1rem 0 0.5rem;
   font-size: 1rem;
 }
 
@@ -104,7 +118,13 @@ button.selected {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  gap: 0.75rem;
   text-align: left;
+}
+
+.table-list button span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .table-actions {
@@ -153,21 +173,51 @@ td:first-child {
   width: 7rem;
 }
 
-.roll-result,
 .error {
   margin-top: 1rem;
   border-radius: 6px;
   padding: 0.85rem 1rem;
 }
 
+.roll-panel {
+  position: sticky;
+  top: 1rem;
+  min-height: 9rem;
+}
+
+.roll-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
 .roll-result {
-  background: #edf4f1;
-  border: 1px solid #9fc5bb;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.roll-result span {
+  color: #2f5d50;
+  font-weight: 700;
+}
+
+.roll-result p {
+  margin: 0;
 }
 
 .error {
   background: #fff1f0;
   border: 1px solid #e6b8b3;
+}
+
+@media (max-width: 1120px) {
+  .layout {
+    grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  }
+
+  .roll-panel {
+    grid-column: 2;
+    position: static;
+  }
 }
 
 @media (max-width: 760px) {
@@ -188,5 +238,10 @@ td:first-child {
 
   .layout {
     grid-template-columns: 1fr;
+  }
+
+  .roll-panel {
+    grid-column: auto;
+    position: static;
   }
 }
